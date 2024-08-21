@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    // Write C++ code here
+    int t;
+    cin>>t;
+    cout<<"Enter the elemnt   "<<endl;
+    vector<int>arr(t);
+    for(int i=0;i<t;i++){
+        cin>>arr[i];
+    }
+    int n;
+    cout<<"enter n: ";
+    cin>>n;
+    sort(arr.begin(),arr.end());
+    int l=0,r=n-1;
+    while(l<r){
+        int diff=arr[r]-arr[l];
+        if(diff==n){
+            cout<<arr[l]<<" "<<arr[r];
+            return 0;
+        }
+        if(diff>n){
+            l++;
+        }
+        else{
+            r--;
+        }
+        
+    }
+    cout<<"Not exist";
+   
+}
+
+/tmp/aRaBF1n6i1.o
+5
+Enter the elemnt   
+5 10 8 7 14
+enter n: 2
+5 7

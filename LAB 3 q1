@@ -23,3 +23,56 @@ int main() {
 0 3
 
 === Code Execution Successful ===
+The best possible time complexity for finding the **first duplicate element and its indices** is **O(n)**, achievable using **hashing (unordered_set or unordered_map)**. Below is an optimized solution with **O(n) time complexity** and **O(n) space complexity**.
+
+---
+
+### Optimal Solution with O(n) Time Complexity
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    unordered_map<int, int> seen; // Element -> First occurrence index
+
+    for (int i = 0; i < n; i++) {
+        if (seen.count(arr[i])) {
+            // Duplicate found, print the first and current index
+            cout << seen[arr[i]] << " " << i << endl;
+            return 0;
+        }
+        // Store the first occurrence of the element
+        seen[arr[i]] = i;
+    }
+
+    // If no duplicate found
+    cout << -1 << endl;
+    return 0;
+}
+```
+
+---
+
+### Explanation:
+1. **Hash Map:** The `unordered_map` stores the first occurrence of each element encountered.
+2. As you iterate over the array:
+   - If the element is already in the map, you've found the **first duplicate**.
+   - Otherwise, store the element and its index.
+3. If no duplicates are found, print `-1`.
+
+---
+
+### Time Complexity:
+- **Time:** O(n), where `n` is the number of elements. Each element is processed at most twice—once for insertion and possibly once for lookup.
+- **Space:** O(n), for storing the elements in the hash map.
+
+This solution ensures that you achieve the **best possible time complexity** for this problem.

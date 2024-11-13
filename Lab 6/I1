@@ -1,0 +1,75 @@
+// Given an unsorted array and a number n, find if there exists a pair of elements whose
+// difference is n.
+
+To solve this problem in C++ with an optimized approach, we’ll use an **unordered set** (similar to a hash set) to achieve an \( O(N) \) time complexity solution. This approach is efficient because it avoids the \( O(N^2) \) complexity of a brute-force solution, which would involve checking all pairs.
+
+### Optimized Approach with Explanation
+
+The idea is simple:
+1. **Use an unordered set**: This set will allow us to check for the presence of specific values in \( O(1) \) time on average.
+2. **Iterate through the array**:
+   - For each element \( x \), check if either \( x + n \) or \( x - n \) is already in the set:
+     - If \( x + n \) is in the set, that means there exists an element \( y \) in the array such that \( y = x + n \), and hence, \( y - x = n \).
+     - If \( x - n \) is in the set, that means there exists an element \( z \) such that \( z = x - n \), and hence, \( x - z = n \).
+   - If either condition is true, return `true` because we’ve found a pair with the required difference.
+3. **Add the current element** to the set after checking (to avoid counting the current element itself in the difference check).
+
+If no pair with the difference \( n \) is found after checking all elements, return `false`.
+
+### C++ Code Implementation
+
+Here’s how this solution looks in C++:
+
+```cpp
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+
+bool findPairWithDifference(const std::vector<int>& arr, int n) {
+    std::unordered_set<int> elements;
+
+    for (int x : arr) {
+        // Check if there exists a pair with the difference n
+        if (elements.count(x + n) || elements.count(x - n)) {
+            return true;
+        }
+
+        // Insert the current element into the set
+        elements.insert(x);
+    }
+
+    // If no pair is found
+    return false;
+}
+
+int main() {
+    std::vector<int> arr = {5, 10, 3, 2, 50, 80};
+    int n = 78;
+    if (findPairWithDifference(arr, n)) {
+        std::cout << "Pair exists with difference " << n << std::endl;
+    } else {
+        std::cout << "No pair exists with difference " << n << std::endl;
+    }
+    return 0;
+}
+```
+
+### Time Complexity Analysis
+
+1. **Iterating Through the Array**: We go through each element in the array exactly once, which takes \( O(N) \) time, where \( N \) is the number of elements in the array.
+2. **Operations on the Unordered Set**:
+   - Checking for \( x + n \) or \( x - n \) in the set takes \( O(1) \) on average.
+   - Inserting an element into the set also takes \( O(1) \) on average.
+
+Therefore, the overall **time complexity** of this solution is \( O(N) \) since each operation (check and insert) is constant time on average and is performed \( N \) times.
+
+### Space Complexity
+
+We use an unordered set to store up to \( N \) elements, so the **space complexity** is \( O(N) \) for the set.
+
+### Summary
+
+- **Time Complexity**: \( O(N) \) — Efficient, as it avoids checking all pairs explicitly.
+- **Space Complexity**: \( O(N) \) — Requires additional storage for the unordered set.
+
+This is an optimal solution to find if there exists a pair of elements with a given difference in an unsorted array.
